@@ -10,7 +10,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class TripListActivity extends BaseActivity {
+public class TripListActivity extends BaseActivity implements RecyclerViewItemSelectedListener {
 
     private ArrayList<TripItem> tripItems;
 
@@ -20,6 +20,7 @@ public class TripListActivity extends BaseActivity {
         setContentView(R.layout.activity_trip_list);
 
         FloatingActionButton addFAB = (FloatingActionButton) findViewById(R.id.add_trip_button);
+        assert addFAB != null;
         addFAB.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -36,7 +37,8 @@ public class TripListActivity extends BaseActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         assert recyclerView != null;
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TripItemAdapter(tripItems));
+        recyclerView.setAdapter(new TripItemAdapter(tripItems, this));
+
     }
 
     private void exampleData() {
@@ -72,5 +74,11 @@ public class TripListActivity extends BaseActivity {
                 "3000 €"
         ));
 
+    }
+
+    @Override
+    public void onItemSelected(int position) {
+        Intent intent = new Intent(this, TripActivity.class);
+        startActivity(intent);
     }
 }

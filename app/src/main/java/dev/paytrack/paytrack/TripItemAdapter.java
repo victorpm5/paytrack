@@ -13,8 +13,10 @@ import java.util.ArrayList;
 public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripItemHolder> {
 
     private ArrayList<TripItem> tripItems;
+    private RecyclerViewItemSelectedListener listener;
 
-    public TripItemAdapter(ArrayList<TripItem> tripItems) {
+    public TripItemAdapter(ArrayList<TripItem> tripItems, RecyclerViewItemSelectedListener listener) {
+        this.listener = listener;
         this.tripItems = tripItems;
         notifyDataSetChanged();
     }
@@ -33,6 +35,15 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
         holder.destination.setText(current.getDestination());
         holder.dates.setText(current.getDates());
         holder.price.setText(current.getPrice());
+        final int pos = position;
+        holder.view.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemSelected(pos);
+                    }
+                }
+        );
     }
 
     @Override
@@ -44,11 +55,11 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
 
         public View view;
         public ImageView image;
-        public TextView destination;
-        public TextView dates;
-        public TextView price;
+        TextView destination;
+        TextView dates;
+        TextView price;
 
-        public TripItemHolder(View itemView) {
+        TripItemHolder(View itemView) {
             super(itemView);
             this.view = itemView;
             this.image = (ImageView) itemView.findViewById(R.id.image);
