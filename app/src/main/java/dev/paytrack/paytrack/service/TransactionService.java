@@ -20,11 +20,11 @@ public interface TransactionService {
     List<Transaction> getTransactionsByOriginIban(String originIban);
 
     /**
-     * Get all transactions by customer's iban between two dates
+     * Get all transactions by customer's iban between two initialDate
      * @param originIban customer's iban
      * @param startDate start date
      * @param endDate end date
-     * @return customer's transactions between two dates
+     * @return customer's transactions between two initialDate
      */
     List<Transaction> getTransactionsByOriginIbanBetweenDates(String originIban, Date startDate, Date endDate);
 

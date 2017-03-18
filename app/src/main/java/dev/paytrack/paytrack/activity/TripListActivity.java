@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.adapter.RecyclerViewItemSelectedListener;
-import dev.paytrack.paytrack.model.TripItem;
+import dev.paytrack.paytrack.domain.Trip;
 import dev.paytrack.paytrack.adapter.TripItemAdapter;
 
 public class TripListActivity extends BaseActivity implements RecyclerViewItemSelectedListener {
 
-    private ArrayList<TripItem> tripItems;
+    private ArrayList<Trip> trips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,44 +35,44 @@ public class TripListActivity extends BaseActivity implements RecyclerViewItemSe
                 }
         );
 
-        tripItems = new ArrayList<>();
+        trips = new ArrayList<>();
         exampleData();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         assert recyclerView != null;
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TripItemAdapter(tripItems, this));
+        recyclerView.setAdapter(new TripItemAdapter(trips, this));
 
     }
 
     private void exampleData() {
 
-        tripItems.add(new TripItem(
+        trips.add(new Trip(
                 BitmapFactory.decodeResource(getResources(), R.mipmap.barcelona),
                 "Barcelona",
                 "01/01/2017 - 07/01/2017",
                 "500 €"
         ));
-        tripItems.add(new TripItem(
+        trips.add(new Trip(
                 BitmapFactory.decodeResource(getResources(), R.mipmap.edinburgh),
                 "Edinburgh",
                 "11/01/2017 - 14/01/2017",
                 "350 €"
         ));
-        tripItems.add(new TripItem(
+        trips.add(new Trip(
                 BitmapFactory.decodeResource(getResources(), R.mipmap.firenze),
                 "Firenze",
                 "01/02/2017 - 01/03/2017",
                 "1900 €"
         ));
-        tripItems.add(new TripItem(
+        trips.add(new Trip(
                 BitmapFactory.decodeResource(getResources(), R.mipmap.zurich),
                 "Zurich",
                 "17/03/2017 - 19/01/2017",
                 "200 €"
         ));
-        tripItems.add(new TripItem(
+        trips.add(new Trip(
                 BitmapFactory.decodeResource(getResources(), R.mipmap.san_francisco),
                 "San Francisco",
                 "28/07/2017 - 06/08/2017",

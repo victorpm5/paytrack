@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dev.paytrack.paytrack.R;
-import dev.paytrack.paytrack.model.TripItem;
+import dev.paytrack.paytrack.domain.Trip;
 
 
 public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripItemHolder> {
 
-    private ArrayList<TripItem> tripItems;
+    private ArrayList<Trip> trips;
     private RecyclerViewItemSelectedListener listener;
 
-    public TripItemAdapter(ArrayList<TripItem> tripItems, RecyclerViewItemSelectedListener listener) {
+    public TripItemAdapter(ArrayList<Trip> trips, RecyclerViewItemSelectedListener listener) {
         this.listener = listener;
-        this.tripItems = tripItems;
+        this.trips = trips;
         notifyDataSetChanged();
     }
 
@@ -33,11 +33,11 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
 
     @Override
     public void onBindViewHolder(TripItemHolder holder, int position) {
-        TripItem current = tripItems.get(position);
+        Trip current = trips.get(position);
         holder.image.setImageBitmap(current.getImage());
         holder.destination.setText(current.getDestination());
         holder.dates.setText(current.getDates());
-        holder.price.setText(current.getPrice());
+        holder.budget.setText(current.getPrice());
         final int pos = position;
         holder.view.setOnClickListener(
                 new View.OnClickListener() {
@@ -51,7 +51,7 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
 
     @Override
     public int getItemCount() {
-        return tripItems.size();
+        return trips.size();
     }
 
     class TripItemHolder extends RecyclerView.ViewHolder {
@@ -60,7 +60,7 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
         public ImageView image;
         TextView destination;
         TextView dates;
-        TextView price;
+        TextView budget;
 
         TripItemHolder(View itemView) {
             super(itemView);
@@ -68,7 +68,7 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
             this.image = (ImageView) itemView.findViewById(R.id.image);
             this.destination = (TextView) itemView.findViewById(R.id.destination);
             this.dates = (TextView) itemView.findViewById(R.id.dates);
-            this.price = (TextView) itemView.findViewById(R.id.price);
+            this.budget = (TextView) itemView.findViewById(R.id.price);
         }
     }
 }
