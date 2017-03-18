@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/add_button">
+        android:layout_alignParentBottom="true">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -19,11 +19,14 @@
 
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/add_button"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"/>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_trip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_plus_white_48dp" />
 
 </RelativeLayout>

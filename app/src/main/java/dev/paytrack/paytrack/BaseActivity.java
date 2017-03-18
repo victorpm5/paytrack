@@ -9,27 +9,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
 
         DrawerLayout drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
         FrameLayout frameLayout = (FrameLayout) drawerLayout.findViewById(R.id.main_frame);
 
-        getLayoutInflater().inflate(R.layout.activity_base, frameLayout, true);
+        getLayoutInflater().inflate(layoutResID, frameLayout, true);
 
         super.setContentView(drawerLayout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
-        assert drawerLayout != null;
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 

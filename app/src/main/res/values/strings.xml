@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">PayTrack</string>
-    <string name="openDrawer">open drawe</string>
-    <string name="closeDrawer">close drawer</string>
+    <string name="openDrawer">Open Drawer</string>
+    <string name="closeDrawer">Close Drawer</string>
 </resources>
