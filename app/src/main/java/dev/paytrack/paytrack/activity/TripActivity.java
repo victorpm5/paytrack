@@ -12,20 +12,30 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import dev.paytrack.paytrack.adapter.PaymentAdapter;
+import dev.paytrack.paytrack.domain.Transaction;
 import dev.paytrack.paytrack.model.PaymentItem;
 import dev.paytrack.paytrack.R;
+import dev.paytrack.paytrack.service.TransactionService;
 import dev.paytrack.paytrack.utils.Utils;
 
 public class TripActivity extends AppCompatActivity {
 
     private GoogleMap mMap;
     private MapView mMapView;
+
+    private TransactionService transactionService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +94,16 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void locateTransactions() {
-
+        List<Transaction> transactions = transactionService.getTransactionsByOriginIbanBetweenDates("iban", new Date(), new Date());
+        for (Transaction t : transactions) {
+            LatLng position = getLocationFromAddress(t.getCounterPartyName());
+            if (position != null) {
+                MarkerOptions marker = new MarkerOptions()
+                        .position(position)
+                        .title(String.valueOf(t.getAmount()));
+                mMap.addMarker(marker);
+            }
+        }
     }
 
     public LatLng getLocationFromAddress(String strAddress) {
