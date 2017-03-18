@@ -25,7 +25,7 @@ public class OAuthUtils {
     private static final String AUTH_SCOPE = "Manage your transactions";
     private static final String CLIENT_ID = "70b4ee41-2475-491c-bb15-33881819c5f4";
     private static final String CLIENT_SECRET_KEY = "Sd-meBHnjlXfh3UcJhSdyNOrQX8L8CzDxTGwH0A5hA2pavhn2vtGA-vhnbjTJ3yz05gTTqebs6qUugbUcXK9JQ";
-    private static final String REDIRECT_URI = "http://localhost:8001";
+    private static final String REDIRECT_URI = "http://localhost:8100";
 
     private String authToken;
     private Activity activity;
@@ -34,6 +34,8 @@ public class OAuthUtils {
         this.activity = activity;
         if (this.authToken == null) {
             AccountManager accountManager = AccountManager.get(activity.getApplicationContext());
+
+            /**
             this.authToken = String.valueOf(
                     accountManager.getAuthToken(new Account("PayTrack", "Implicit"),
                                                 AUTH_SCOPE,
@@ -41,6 +43,15 @@ public class OAuthUtils {
                                                 activity,
                                                 new OnTokenAcquired(),
                                                 new Handler()));
+             **/
+
+            AccountManagerFuture<Bundle> token = accountManager.getAuthToken(new Account("PayTrack", "Implicit"),
+                    AUTH_SCOPE,
+                    new Bundle(),
+                    activity,
+                    new OnTokenAcquired(),
+                    new Handler());
+
             openConnection();
         }
         return this.authToken;

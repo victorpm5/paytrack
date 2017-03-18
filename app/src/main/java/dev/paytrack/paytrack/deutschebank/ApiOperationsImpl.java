@@ -18,7 +18,7 @@ import dev.paytrack.paytrack.domain.Transaction;
 import dev.paytrack.paytrack.domain.TransactionResponse;
 import dev.paytrack.paytrack.domain.UserInfo;
 
-public class ApiOperationsImpl implements ApiOperations {
+public class ApiOperationsImpl implements ApiOperations  {
 
     private final String apiUrl = "https://simulator-api.db.com/gw/dbapi/v1";
     private final String accessToken = "patata"; //TODO delete -> get token by param or as property
@@ -123,6 +123,25 @@ public class ApiOperationsImpl implements ApiOperations {
         return resposta;
     }
 
+    @Override
+    public void Authoritzation(){
+
+        String url = UriComponentsBuilder.fromUriString("https://simulator-api.db.com/gw/oidc")
+                .path("/authorize")
+                .queryParam("response_type","code")
+                .queryParam("redirect_uri","localhost:8100")
+                .queryParam("client_id","70b4ee41-2475-491c-bb15-33881819c5f4")
+                .build()
+                .toString();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            Object o = restTemplate.getForObject(url, Object.class);
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+    }
 
     private String getUrlFromPath(String path){
 

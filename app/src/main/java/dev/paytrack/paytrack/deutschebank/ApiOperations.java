@@ -16,5 +16,7 @@ public interface ApiOperations {
     public List<Transaction> getTransactions();
 
     public UserInfo getUserInfo();
+
+    public void Authoritzation();
 }
 
