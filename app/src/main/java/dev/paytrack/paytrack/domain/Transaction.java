@@ -24,7 +24,7 @@ public class Transaction {
 
     // Amount of the transaction. If the amount is positive, the customer received money,
     // if the amount is negative the customer lost money
-    private Number amount;
+    private Double amount;
 
     // Name of the counter party (optional)
     private String counterPartyName;

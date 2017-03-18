@@ -33,6 +33,10 @@ public class DateUtils {
         return parsedDate;
     }
 
+    public static boolean betweenTwoDates(Date date, Date startDate, Date endDate) {
+        return (startDate.before(date) && endDate.after(endDate));
+    }
+  
     /**
      * Parse a date picker to String format
      * @param datePicker Date in 'YYYY-MM-DD' String format
