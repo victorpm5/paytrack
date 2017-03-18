@@ -23,7 +23,7 @@ public class CashAccount {
     private String iban;
 
     // Booked balance in EUR
-    private Number balance;
+    private Double balance;
 
     // Description of the product
     private String productDescription;
