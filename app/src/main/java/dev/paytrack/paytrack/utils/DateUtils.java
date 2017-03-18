@@ -30,4 +30,7 @@ public class DateUtils {
         return parsedDate;
     }
 
+    public static boolean betweenTwoDates(Date date, Date startDate, Date endDate) {
+        return (startDate.before(date) && endDate.after(endDate));
+    }
 }
