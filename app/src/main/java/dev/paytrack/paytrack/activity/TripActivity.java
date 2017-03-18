@@ -19,6 +19,8 @@ import java.util.List;
 
 import dev.paytrack.paytrack.adapter.PaymentAdapter;
 import dev.paytrack.paytrack.domain.Transaction;
+import dev.paytrack.paytrack.foursquare.FoursquareAPI;
+import dev.paytrack.paytrack.foursquare.FoursquareVenue;
 import dev.paytrack.paytrack.model.PaymentItem;
 import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.service.ServiceFactory;
@@ -31,6 +33,7 @@ public class TripActivity extends AppCompatActivity {
     private MapView mMapView;
 
     private TransactionService transactionService;
+    private FoursquareAPI foursquareAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class TripActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trip);
 
         transactionService = ServiceFactory.getTransactionService();
+        foursquareAPI = ServiceFactory.getFoursquareAPI();
         mMapView = (MapView) findViewById(R.id.mapView);
 
         initializeData();
@@ -86,6 +90,7 @@ public class TripActivity extends AppCompatActivity {
                             .zoom(10)         // we set the zoom
                             .build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000, null);
+                    List<FoursquareVenue> list = foursquareAPI.getVenuesFromCity(BCN.longitude, BCN.longitude);
                 }
                 mMapView.onResume();
                 locateTransactions();
