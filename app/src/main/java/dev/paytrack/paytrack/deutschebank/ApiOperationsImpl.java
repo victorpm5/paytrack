@@ -1,6 +1,8 @@
 package dev.paytrack.paytrack.deutschebank;
 
 
+import android.util.Base64;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,6 +16,7 @@ import dev.paytrack.paytrack.domain.Address;
 import dev.paytrack.paytrack.domain.AddressResponse;
 import dev.paytrack.paytrack.domain.CashAccount;
 import dev.paytrack.paytrack.domain.CashAccountResponse;
+import dev.paytrack.paytrack.domain.TokenResponse;
 import dev.paytrack.paytrack.domain.Transaction;
 import dev.paytrack.paytrack.domain.TransactionResponse;
 import dev.paytrack.paytrack.domain.UserInfo;
@@ -21,6 +24,9 @@ import dev.paytrack.paytrack.domain.UserInfo;
 public class ApiOperationsImpl implements ApiOperations  {
 
     private final String apiUrl = "https://simulator-api.db.com/gw/dbapi/v1";
+    private static final String CLIENT_ID = "70b4ee41-2475-491c-bb15-33881819c5f4";
+    private static final String CLIENT_SECRET_KEY = "Sd-meBHnjlXfh3UcJhSdyNOrQX8L8CzDxTGwH0A5hA2pavhn2vtGA-vhnbjTJ3yz05gTTqebs6qUugbUcXK9JQ";
+
     private final String accessToken = "patata"; //TODO delete -> get token by param or as property
 
     @Override
@@ -124,31 +130,43 @@ public class ApiOperationsImpl implements ApiOperations  {
     }
 
     @Override
-    public void Authoritzation(){
+    public String getUserToken(String code){
 
         String url = UriComponentsBuilder.fromUriString("https://simulator-api.db.com/gw/oidc")
-                .path("/authorize")
-                .queryParam("response_type","code")
-                .queryParam("redirect_uri", "http://bienepaytrack.dev")
-                .queryParam("client_id", "70b4ee41-2475-491c-bb15-33881819c5f4")
+                .path("/token")
+                .queryParam("grant_type","authorization_code")
+                .queryParam("code",code)
+                .queryParam("redirect_uri","http://bienepaytrack.dev")
                 .build()
-                .toString();
+        .toString();
+
+        String authorization = CLIENT_ID.concat(":").concat(CLIENT_SECRET_KEY);
+
+        byte[] data = authorization.getBytes();
+        String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set("Authorization","Basic:" + base64);
+
+        HttpEntity<String> requestEntity = new HttpEntity<String>("Params", headers);
 
         RestTemplate restTemplate = new RestTemplate();
 
+        TokenResponse resposta = null;
+
         try {
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<TokenResponse> response = restTemplate
+                    .exchange(url, HttpMethod.GET, requestEntity, TokenResponse.class);
 
-            HttpEntity<String> requestEntity = new HttpEntity<String>("Params", headers);
-
-            HttpEntity<Object> response = restTemplate
-                    .exchange(url, HttpMethod.GET, requestEntity, Object.class);
+            resposta = response.getBody();
 
         }catch(Exception e){
             System.out.println(e.toString());
-        }
+         }
+
+        return null;
     }
 
     private String getUrlFromPath(String path){

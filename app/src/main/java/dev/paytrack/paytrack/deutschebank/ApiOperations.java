@@ -17,6 +17,6 @@ public interface ApiOperations {
 
     public UserInfo getUserInfo();
 
-    public void Authoritzation();
+    public String getUserToken(String code);
 }
 
