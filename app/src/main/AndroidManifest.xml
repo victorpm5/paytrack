@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.CreateTripActivity" />
-        <activity android:name=".activity.TripActivity"></activity>
+        <activity android:name=".activity.TripActivity" />
     </application>
 
 </manifest>

@@ -1,8 +1,6 @@
 package dev.paytrack.paytrack.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Builder;
@@ -13,8 +11,8 @@ import lombok.experimental.Builder;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Builder
 @ToString
 public class Address {
