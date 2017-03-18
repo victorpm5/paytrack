@@ -7,20 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.domain.Trip;
+import dev.paytrack.paytrack.utils.FileManager;
+import io.realm.RealmResults;
 
 
 public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripItemHolder> {
 
-    private ArrayList<Trip> trips;
+    private RealmResults<Trip> trips;
     private RecyclerViewItemSelectedListener listener;
+    private FileManager fileManager;
 
-    public TripItemAdapter(ArrayList<Trip> trips, RecyclerViewItemSelectedListener listener) {
+    public TripItemAdapter(RealmResults<Trip> trips, RecyclerViewItemSelectedListener listener, FileManager fileManager) {
         this.listener = listener;
         this.trips = trips;
+        this.fileManager = fileManager;
         notifyDataSetChanged();
     }
 
@@ -34,7 +36,7 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
     @Override
     public void onBindViewHolder(TripItemHolder holder, int position) {
         Trip current = trips.get(position);
-        holder.image.setImageBitmap(current.getImage());
+        holder.image.setImageBitmap(fileManager.loadImageFromStorage(current.getImage(), R.mipmap.barcelona));
         holder.destination.setText(current.getDestination());
         holder.dates.setText(current.getDates());
         holder.budget.setText(current.getPrice());

@@ -21,6 +21,9 @@ public class Trip extends RealmObject {
     private Date finalDate;
     private String price;
 
+    public Trip() {
+    }
+
     public Trip(String image, String destination, Date initialDate, Date finalDate, String price) {
         this.image = image;
         this.destination = destination;

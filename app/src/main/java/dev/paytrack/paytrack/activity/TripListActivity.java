@@ -1,23 +1,23 @@
 package dev.paytrack.paytrack.activity;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.ArrayList;
-
 import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.adapter.RecyclerViewItemSelectedListener;
-import dev.paytrack.paytrack.domain.Trip;
 import dev.paytrack.paytrack.adapter.TripItemAdapter;
+import dev.paytrack.paytrack.domain.Trip;
+import dev.paytrack.paytrack.utils.FileManager;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class TripListActivity extends BaseActivity implements RecyclerViewItemSelectedListener {
 
-    private ArrayList<Trip> trips;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,49 +35,23 @@ public class TripListActivity extends BaseActivity implements RecyclerViewItemSe
                 }
         );
 
-        trips = new ArrayList<>();
-        exampleData();
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         assert recyclerView != null;
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TripItemAdapter(trips, this));
 
     }
 
-    private void exampleData() {
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        trips.add(new Trip(
-                BitmapFactory.decodeResource(getResources(), R.mipmap.barcelona),
-                "Barcelona",
-                "01/01/2017 - 07/01/2017",
-                "500 €"
-        ));
-        trips.add(new Trip(
-                BitmapFactory.decodeResource(getResources(), R.mipmap.edinburgh),
-                "Edinburgh",
-                "11/01/2017 - 14/01/2017",
-                "350 €"
-        ));
-        trips.add(new Trip(
-                BitmapFactory.decodeResource(getResources(), R.mipmap.firenze),
-                "Firenze",
-                "01/02/2017 - 01/03/2017",
-                "1900 €"
-        ));
-        trips.add(new Trip(
-                BitmapFactory.decodeResource(getResources(), R.mipmap.zurich),
-                "Zurich",
-                "17/03/2017 - 19/01/2017",
-                "200 €"
-        ));
-        trips.add(new Trip(
-                BitmapFactory.decodeResource(getResources(), R.mipmap.san_francisco),
-                "San Francisco",
-                "28/07/2017 - 06/08/2017",
-                "3000 €"
-        ));
+        Realm.init(this);
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Trip> trips = realm.where(Trip.class).findAll();
+        trips.sort("initialDate");
+
+        recyclerView.setAdapter(new TripItemAdapter(trips, this, FileManager.getInstance(this)));
 
     }
 
