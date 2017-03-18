@@ -134,9 +134,6 @@ public class ApiOperationsImpl implements ApiOperations  {
 
         String url = UriComponentsBuilder.fromUriString("https://simulator-api.db.com/gw/oidc")
                 .path("/token")
-                .queryParam("grant_type","authorization_code")
-                .queryParam("code",code)
-                .queryParam("redirect_uri","http://bienepaytrack.dev")
                 .build()
         .toString();
 
@@ -147,7 +144,10 @@ public class ApiOperationsImpl implements ApiOperations  {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set("Authorization","Basic:" + base64);
+        headers.set("Authorization", "Basic " + base64);
+        headers.set("grant_type","authorization_code");
+        headers.set("code",code);
+        headers.set("redirect_uri","http://bienepaytrack.dev");
 
         HttpEntity<String> requestEntity = new HttpEntity<String>("Params", headers);
 
@@ -158,7 +158,7 @@ public class ApiOperationsImpl implements ApiOperations  {
         try {
 
             HttpEntity<TokenResponse> response = restTemplate
-                    .exchange(url, HttpMethod.GET, requestEntity, TokenResponse.class);
+                    .exchange(url, HttpMethod.POST, requestEntity, TokenResponse.class);
 
             resposta = response.getBody();
 
