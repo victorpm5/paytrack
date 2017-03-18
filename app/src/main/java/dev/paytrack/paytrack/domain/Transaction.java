@@ -13,8 +13,6 @@ import lombok.experimental.Builder;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 @ToString
 public class Transaction {
