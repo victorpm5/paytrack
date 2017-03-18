@@ -1,4 +1,4 @@
-package dev.paytrack.paytrack;
+package dev.paytrack.paytrack.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.utils.DateUtils;
 
 public class CreateTripActivity extends AppCompatActivity {

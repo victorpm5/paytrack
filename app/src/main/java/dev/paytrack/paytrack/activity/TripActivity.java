@@ -1,4 +1,4 @@
-package dev.paytrack.paytrack;
+package dev.paytrack.paytrack.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import dev.paytrack.paytrack.adapter.PaymentAdapter;
+import dev.paytrack.paytrack.model.PaymentItem;
+import dev.paytrack.paytrack.R;
 
 public class TripActivity extends AppCompatActivity {
 

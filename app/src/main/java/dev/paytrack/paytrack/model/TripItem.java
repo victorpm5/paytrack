@@ -1,4 +1,4 @@
-package dev.paytrack.paytrack;
+package dev.paytrack.paytrack.model;
 
 import android.graphics.Bitmap;
 

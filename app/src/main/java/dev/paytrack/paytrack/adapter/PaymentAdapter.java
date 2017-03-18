@@ -1,4 +1,4 @@
-package dev.paytrack.paytrack;
+package dev.paytrack.paytrack.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import dev.paytrack.paytrack.R;
+import dev.paytrack.paytrack.model.PaymentItem;
 
 public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentHolder> {
 

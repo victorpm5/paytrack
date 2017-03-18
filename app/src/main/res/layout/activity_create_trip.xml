@@ -4,7 +4,7 @@
     android:id="@+id/activity_create_trip"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dev.paytrack.paytrack.CreateTripActivity">
+    tools:context="dev.paytrack.paytrack.activity.CreateTripActivity">
 
     <ImageView
         android:layout_width="match_parent"

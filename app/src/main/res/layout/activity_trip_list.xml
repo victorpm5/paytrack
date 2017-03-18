@@ -4,7 +4,7 @@
     android:id="@+id/activity_trip_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dev.paytrack.paytrack.TripListActivity">
+    tools:context="dev.paytrack.paytrack.activity.TripListActivity">
 
     <ScrollView
         android:layout_width="match_parent"

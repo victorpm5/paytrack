@@ -1,4 +1,4 @@
-package dev.paytrack.paytrack;
+package dev.paytrack.paytrack.activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -9,6 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
+
+import dev.paytrack.paytrack.R;
+import dev.paytrack.paytrack.adapter.RecyclerViewItemSelectedListener;
+import dev.paytrack.paytrack.model.TripItem;
+import dev.paytrack.paytrack.adapter.TripItemAdapter;
 
 public class TripListActivity extends BaseActivity implements RecyclerViewItemSelectedListener {
 
