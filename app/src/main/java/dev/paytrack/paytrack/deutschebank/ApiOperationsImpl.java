@@ -129,15 +129,23 @@ public class ApiOperationsImpl implements ApiOperations  {
         String url = UriComponentsBuilder.fromUriString("https://simulator-api.db.com/gw/oidc")
                 .path("/authorize")
                 .queryParam("response_type","code")
-                .queryParam("redirect_uri","localhost:8100")
-                .queryParam("client_id","70b4ee41-2475-491c-bb15-33881819c5f4")
+                .queryParam("redirect_uri", "http://bienepaytrack.dev")
+                .queryParam("client_id", "70b4ee41-2475-491c-bb15-33881819c5f4")
                 .build()
                 .toString();
 
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            Object o = restTemplate.getForObject(url, Object.class);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<String> requestEntity = new HttpEntity<String>("Params", headers);
+
+            HttpEntity<Object> response = restTemplate
+                    .exchange(url, HttpMethod.GET, requestEntity, Object.class);
+
         }catch(Exception e){
             System.out.println(e.toString());
         }

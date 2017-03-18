@@ -29,9 +29,5 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
         }.execute(1);
-
-
-        //String authToken = Preferences.getAuthToken(this);
-        //Log.d("TOKEN", authToken);
     }
 }
