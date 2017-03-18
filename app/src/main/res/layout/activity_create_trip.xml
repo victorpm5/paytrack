@@ -55,7 +55,8 @@
             android:inputType="date"
             android:ems="10"
             android:hint="Initial date"
-            android:id="@+id/date1" />
+            android:id="@+id/date1"
+            android:onClick="showDatePicker"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -75,7 +76,8 @@
             android:inputType="date"
             android:ems="10"
             android:hint="Final date"
-            android:id="@+id/date2" />
+            android:id="@+id/date2"
+            android:onClick="showDatePicker"/>
 
     </android.support.design.widget.TextInputLayout>
 
