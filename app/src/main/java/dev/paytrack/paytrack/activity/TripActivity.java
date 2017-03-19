@@ -1,5 +1,6 @@
 package dev.paytrack.paytrack.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +33,8 @@ public class TripActivity extends AppCompatActivity {
     private GoogleMap mMap;
     private MapView mMapView;
 
+    private String location;
+
     private TransactionService transactionService;
     private FoursquareAPI foursquareAPI;
 
@@ -43,7 +46,7 @@ public class TripActivity extends AppCompatActivity {
         transactionService = ServiceFactory.getTransactionService();
         foursquareAPI = ServiceFactory.getFoursquareAPI();
 
-        String location = getIntent().getExtras().getString(INTENT_CITY);
+        location = getIntent().getExtras().getString(INTENT_CITY);
         LatLng coordinates = getLocationFromAddress(location);
         foursquareAPI.generateVenuesFromCity(   coordinates.latitude,
                                                 coordinates.longitude);
@@ -71,7 +74,7 @@ public class TripActivity extends AppCompatActivity {
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
 
-                LatLng BCN = getLocationFromAddress("Barcelona");
+                LatLng BCN = getLocationFromAddress(location);
                 if (BCN != null) {
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(BCN)      // Sets the center to BCN
@@ -104,6 +107,8 @@ public class TripActivity extends AppCompatActivity {
     }
 
     public void showRecommendPlaces(View view) {
-
+        Intent intent = new Intent(this, RecommendVenuesActivity.class);
+        intent.putExtra(RecommendVenuesActivity.INTENT_CITY, location);
+        startActivity(intent);
     }
 }

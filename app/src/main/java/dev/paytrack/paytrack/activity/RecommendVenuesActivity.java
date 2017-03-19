@@ -28,8 +28,11 @@ import dev.paytrack.paytrack.utils.Utils;
 
 public class RecommendVenuesActivity extends AppCompatActivity {
 
+    public static final String INTENT_CITY = "INTENT_CITY";
     private GoogleMap mMap;
     private MapView mMapView;
+
+    private String location;
 
     private TransactionService transactionService;
 
@@ -37,6 +40,8 @@ public class RecommendVenuesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend_venues);
+
+        location = getIntent().getExtras().getString(INTENT_CITY);
 
         transactionService = ServiceFactory.getTransactionService();
 
@@ -47,7 +52,8 @@ public class RecommendVenuesActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        ArrayList<FoursquareVenue> venues = new ArrayList<>();
+        ArrayList<FoursquareVenue> venues = (ArrayList<FoursquareVenue>)
+                transactionService.getCurrentRecommendVenue();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -63,7 +69,7 @@ public class RecommendVenuesActivity extends AppCompatActivity {
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
 
-                LatLng BCN = getLocationFromAddress("Barcelona");
+                LatLng BCN = getLocationFromAddress(location);
                 if (BCN != null) {
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(BCN)      // Sets the center to BCN
