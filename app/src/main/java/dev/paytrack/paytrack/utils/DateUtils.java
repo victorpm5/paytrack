@@ -5,7 +5,6 @@ import android.widget.DatePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -23,7 +22,7 @@ public class DateUtils {
     public static Date parseStringToDate(String dateInString) {
         Date parsedDate = null;
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD", new Locale("en_EN"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("en_EN"));
         try {
             parsedDate = simpleDateFormat.parse(dateInString);
         } catch (ParseException e) {
@@ -45,20 +44,31 @@ public class DateUtils {
     public static String parseDatePickerToString(DatePicker datePicker) {
         String parsedString;
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(0);
-        calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
-        calendar.set(Calendar.MONTH, datePicker.getMonth());
-        calendar.set(Calendar.YEAR, datePicker.getYear());
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(0);
+//        calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+//        Log.v("DEBUG-DATE", datePicker.getDayOfMonth() + "");
+//        calendar.set(Calendar.MONTH, datePicker.getMonth());
+//        Log.v("DEBUG-DATE", datePicker.getMonth() + "");
+//        calendar.set(Calendar.YEAR, datePicker.getYear());
+//        Log.v("DEBUG-DATE", datePicker.getYear() + "");
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD", new Locale("en_EN"));
-        parsedString = simpleDateFormat.format(calendar.getTime());
+        String day = String.valueOf(datePicker.getDayOfMonth());
+        if (datePicker.getDayOfMonth() < 10) day = "0" + day;
 
-        return parsedString;
+        String month = String.valueOf(datePicker.getMonth() + 1);
+        if (datePicker.getMonth() + 1 < 10) month = "0" + month;
+
+        String year = String.valueOf(datePicker.getYear());
+
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd", new Locale("en_EN"));
+//        parsedString = simpleDateFormat.format(calendar.getTime());
+
+        return year + "-" + month + "-" + day;
     }
 
     public static String dateToString(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD", new Locale("en_EN"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("en_EN"));
         return simpleDateFormat.format(date);
     }
 

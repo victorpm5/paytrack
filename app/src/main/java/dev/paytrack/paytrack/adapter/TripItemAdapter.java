@@ -36,7 +36,8 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
     @Override
     public void onBindViewHolder(TripItemHolder holder, int position) {
         Trip current = trips.get(position);
-        holder.image.setImageBitmap(fileManager.loadImageFromStorage(current.getImage(), R.mipmap.barcelona));
+        //holder.image.setImageBitmap(fileManager.loadImageFromStorage(current.getImage(), R.mipmap.barcelona));
+        setImage(holder.image, current.getDestination());
         holder.destination.setText(current.getDestination());
         holder.dates.setText(current.getDates());
         holder.budget.setText(current.getPrice());
@@ -49,6 +50,18 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
                     }
                 }
         );
+    }
+
+    private void setImage(ImageView imageView, String destination) {
+        if (destination.equals("Barcelona")) {
+            imageView.setImageBitmap(fileManager.loadImageFromStorage(R.mipmap.barcelona));
+        } else if (destination.equals("Edinburgh")) {
+            imageView.setImageBitmap(fileManager.loadImageFromStorage(R.mipmap.edinburgh));
+        } else if (destination.equals("Zurich")) {
+            imageView.setImageBitmap(fileManager.loadImageFromStorage(R.mipmap.zurich));
+        } else if (destination.equals("Firenze")) {
+            imageView.setImageBitmap(fileManager.loadImageFromStorage(R.mipmap.firenze));
+        }
     }
 
     @Override

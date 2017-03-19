@@ -17,7 +17,7 @@
         android:id="@+id/image"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@color/colorAccent"
+        android:src="@mipmap/ic_paytrack"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginTop="16dp"/>

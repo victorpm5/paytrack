@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".activity.CreateTripActivity" />
         <activity android:name=".activity.TripActivity" />
+        <activity android:name=".activity.RecommendVenuesActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"

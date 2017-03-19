@@ -18,15 +18,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.adapter.TransactionAdapter;
 import dev.paytrack.paytrack.domain.Transaction;
 import dev.paytrack.paytrack.foursquare.FoursquareAPI;
-import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.service.ServiceFactory;
 import dev.paytrack.paytrack.service.TransactionService;
-import dev.paytrack.paytrack.utils.DateUtils;
 import dev.paytrack.paytrack.utils.Utils;
 
 public class TripActivity extends AppCompatActivity {
@@ -47,6 +45,7 @@ public class TripActivity extends AppCompatActivity {
 
     private TransactionService transactionService;
     private FoursquareAPI foursquareAPI;
+    private TextView budgetText;
 
 
     @Override
@@ -60,7 +59,7 @@ public class TripActivity extends AppCompatActivity {
         location = getIntent().getExtras().getString(INTENT_CITY);
         startDate = (Date) getIntent().getExtras().getSerializable(START_DATE);
         endDate = (Date) getIntent().getExtras().getSerializable(END_DATE);
-        budget =  getIntent().getExtras().getString(BUDGET);
+        budget =  "--";//getIntent().getExtras().getString(BUDGET, "200");
 
 
         LatLng coordinates = getLocationFromAddress(location);
@@ -69,8 +68,8 @@ public class TripActivity extends AppCompatActivity {
 
         mMapView = (MapView) findViewById(R.id.mapView);
 
-        TextView budgetText = (TextView) findViewById(R.id.money);
-        budgetText.setText(budget + "€");
+        budgetText = (TextView) findViewById(R.id.money);
+        budgetText.setText(budget + " €");
 
         initializeData();
         initializeMap(savedInstanceState);
@@ -79,6 +78,12 @@ public class TripActivity extends AppCompatActivity {
     private void initializeData() {
         ArrayList<Transaction> transactions = (ArrayList<Transaction>) transactionService.
                 getTransactionsByOriginIbanBetweenDates(null, startDate, endDate);
+
+        double total = 0.0;
+        for (Transaction t : transactions) {
+            total += t.getAmount();
+        }
+        budgetText.setText(String.valueOf(total) + " €");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -117,7 +122,7 @@ public class TripActivity extends AppCompatActivity {
             if (position != null) {
                 MarkerOptions marker = new MarkerOptions()
                         .position(position)
-                        .title(String.valueOf(t.getAmount()));
+                        .title(String.valueOf(t.getCounterPartyName()));
                 mMap.addMarker(marker);
             }
         }
