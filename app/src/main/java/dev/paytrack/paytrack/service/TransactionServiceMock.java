@@ -31,14 +31,16 @@ public class TransactionServiceMock implements TransactionService {
             "2017-01-10","2017-01-11","2017-01-12","2017-01-13",
             "2017-03-01","2017-03-02","2017-03-03","2017-03-04"};
 
-    public List<Transaction> transaction = new ArrayList<>();
+    public List<Transaction> transaction;
 
     public TransactionServiceMock(){
+        transaction = new ArrayList<>();
         for(int i = 0; i < 16; ++i){
-            Transaction t = new Transaction();
-            t.setAmount(costos[i]);
-            t.setBookingDate(dates[i]);
-            t.setCounterPartyName(llocs[i]);
+            Transaction t = Transaction.builder()
+                    .amount(costos[i])
+                    .bookingDate(dates[i])
+                    .counterPartyName(llocs[i])
+                    .build();
 
             transaction.add(t);
         }

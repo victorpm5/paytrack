@@ -25,15 +25,21 @@ import dev.paytrack.paytrack.foursquare.FoursquareAPI;
 import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.service.ServiceFactory;
 import dev.paytrack.paytrack.service.TransactionService;
+import dev.paytrack.paytrack.utils.DateUtils;
 import dev.paytrack.paytrack.utils.Utils;
 
 public class TripActivity extends AppCompatActivity {
 
     public static final String INTENT_CITY = "INTENT_CITY";
+    public static final String START_DATE = "START_DATE";
+    public static final String END_DATE = "END_DATE";
+
     private GoogleMap mMap;
     private MapView mMapView;
 
     private String location;
+    private String startDate;
+    private String endDate;
 
     private TransactionService transactionService;
     private FoursquareAPI foursquareAPI;
@@ -47,6 +53,9 @@ public class TripActivity extends AppCompatActivity {
         foursquareAPI = ServiceFactory.getFoursquareAPI();
 
         location = getIntent().getExtras().getString(INTENT_CITY);
+        startDate = getIntent().getExtras().getString(START_DATE);
+        endDate = getIntent().getExtras().getString(END_DATE);
+
         LatLng coordinates = getLocationFromAddress(location);
         foursquareAPI.generateVenuesFromCity(   coordinates.latitude,
                                                 coordinates.longitude);
@@ -58,7 +67,10 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        ArrayList<Transaction> transactions = new ArrayList<>();
+        ArrayList<Transaction> transactions = (ArrayList<Transaction>) transactionService.
+                getTransactionsByOriginIbanBetweenDates(null,
+                                                        DateUtils.parseStringToDate(startDate),
+                                                        DateUtils.parseStringToDate(endDate));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -89,8 +101,10 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void locateTransactions() {
-        List<Transaction> transactions = transactionService.
-                getTransactionsByOriginIbanBetweenDates("iban", new Date(), new Date());
+        ArrayList<Transaction> transactions = (ArrayList<Transaction>) transactionService.
+                getTransactionsByOriginIbanBetweenDates(null,
+                        DateUtils.parseStringToDate(startDate),
+                        DateUtils.parseStringToDate(endDate));
         for (Transaction t : transactions) {
             LatLng position = getLocationFromAddress(t.getCounterPartyName());
             if (position != null) {
