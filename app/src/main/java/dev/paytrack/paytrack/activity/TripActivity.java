@@ -42,6 +42,9 @@ public class TripActivity extends AppCompatActivity {
 
         transactionService = ServiceFactory.getTransactionService();
         foursquareAPI = ServiceFactory.getFoursquareAPI();
+
+        List<FoursquareVenue> list = foursquareAPI.getVenuesFromCity(40.7463956, -73.9852992);
+
         mMapView = (MapView) findViewById(R.id.mapView);
 
         initializeData();
@@ -90,7 +93,6 @@ public class TripActivity extends AppCompatActivity {
                             .zoom(10)         // we set the zoom
                             .build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000, null);
-                    List<FoursquareVenue> list = foursquareAPI.getVenuesFromCity(BCN.longitude, BCN.longitude);
                 }
                 mMapView.onResume();
                 locateTransactions();

@@ -124,6 +124,12 @@ public class FoursquareAPIImpl implements FoursquareAPI {
                                     if (jsonArray.getJSONObject(i).getJSONObject("location").has("city")) {
                                         poi.setCity(jsonArray.getJSONObject(i).getJSONObject("location").getString("city"));
                                     }
+                                    if (jsonArray.getJSONObject(i).getJSONObject("location").has("lat")) {
+                                        poi.setLatitude(jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"));
+                                    }
+                                    if (jsonArray.getJSONObject(i).getJSONObject("location").has("lng")) {
+                                        poi.setLongitute(jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng"));
+                                    }
                                     if (jsonArray.getJSONObject(i).has("categories")) {
                                         if (jsonArray.getJSONObject(i).getJSONArray("categories").length() > 0) {
                                             if (jsonArray.getJSONObject(i).getJSONArray("categories").getJSONObject(0).has("icon")) {

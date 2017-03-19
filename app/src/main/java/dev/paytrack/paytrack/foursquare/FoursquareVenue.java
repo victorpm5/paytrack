@@ -9,6 +9,24 @@ public class FoursquareVenue {
     private String name;
     private String city;
     private String category;
+    private Double longitute;
+    private Double latitude;
+
+    public Double getLongitute() {
+        return longitute;
+    }
+
+    public void setLongitute(Double longitute) {
+        this.longitute = longitute;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
     public FoursquareVenue() {
         this.name = "";
