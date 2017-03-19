@@ -11,8 +11,6 @@ import lombok.experimental.Builder;
  */
 @Getter
 @Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
 @Builder
 @ToString
 public class CashAccount {

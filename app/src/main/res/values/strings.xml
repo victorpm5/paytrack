@@ -2,6 +2,7 @@
     <string name="app_name">PayTrack</string>
     <string name="openDrawer">Open Drawer</string>
     <string name="closeDrawer">Close Drawer</string>
+    <string name="title_activity_authentication">AuthenticationActivity</string>
     <string name="choose_file">Choose file from gallery</string>
     <string name="take_pic">Take picture from camera</string>
 </resources>
