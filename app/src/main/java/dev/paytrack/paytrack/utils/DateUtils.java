@@ -57,4 +57,9 @@ public class DateUtils {
         return parsedString;
     }
 
+    public static String dateToString(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD", new Locale("en_EN"));
+        return simpleDateFormat.format(date);
+    }
+
 }

@@ -7,20 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import dev.paytrack.paytrack.R;
-import dev.paytrack.paytrack.model.TripItem;
+import dev.paytrack.paytrack.domain.Trip;
+import dev.paytrack.paytrack.utils.FileManager;
+import io.realm.RealmResults;
 
 
 public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripItemHolder> {
 
-    private ArrayList<TripItem> tripItems;
+    private RealmResults<Trip> trips;
     private RecyclerViewItemSelectedListener listener;
+    private FileManager fileManager;
 
-    public TripItemAdapter(ArrayList<TripItem> tripItems, RecyclerViewItemSelectedListener listener) {
+    public TripItemAdapter(RealmResults<Trip> trips, RecyclerViewItemSelectedListener listener, FileManager fileManager) {
         this.listener = listener;
-        this.tripItems = tripItems;
+        this.trips = trips;
+        this.fileManager = fileManager;
         notifyDataSetChanged();
     }
 
@@ -33,11 +35,11 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
 
     @Override
     public void onBindViewHolder(TripItemHolder holder, int position) {
-        TripItem current = tripItems.get(position);
-        holder.image.setImageBitmap(current.getImage());
+        Trip current = trips.get(position);
+        holder.image.setImageBitmap(fileManager.loadImageFromStorage(current.getImage(), R.mipmap.barcelona));
         holder.destination.setText(current.getDestination());
         holder.dates.setText(current.getDates());
-        holder.price.setText(current.getPrice());
+        holder.budget.setText(current.getPrice());
         final int pos = position;
         holder.view.setOnClickListener(
                 new View.OnClickListener() {
@@ -51,7 +53,7 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
 
     @Override
     public int getItemCount() {
-        return tripItems.size();
+        return trips.size();
     }
 
     class TripItemHolder extends RecyclerView.ViewHolder {
@@ -60,7 +62,7 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
         public ImageView image;
         TextView destination;
         TextView dates;
-        TextView price;
+        TextView budget;
 
         TripItemHolder(View itemView) {
             super(itemView);
@@ -68,7 +70,7 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemAdapter.TripIt
             this.image = (ImageView) itemView.findViewById(R.id.image);
             this.destination = (TextView) itemView.findViewById(R.id.destination);
             this.dates = (TextView) itemView.findViewById(R.id.dates);
-            this.price = (TextView) itemView.findViewById(R.id.price);
+            this.budget = (TextView) itemView.findViewById(R.id.price);
         }
     }
 }

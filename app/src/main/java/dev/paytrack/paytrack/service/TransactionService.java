@@ -3,8 +3,8 @@ package dev.paytrack.paytrack.service;
 import java.util.Date;
 import java.util.List;
 
-import dev.paytrack.paytrack.domain.Establishment;
 import dev.paytrack.paytrack.domain.Transaction;
+import dev.paytrack.paytrack.foursquare.FoursquareVenue;
 
 /**
  * Created by albert on 18/03/17.
@@ -20,28 +20,18 @@ public interface TransactionService {
     List<Transaction> getTransactionsByOriginIban(String originIban);
 
     /**
-     * Get all transactions by customer's iban between two dates
+     * Get all transactions by customer's iban between two initialDate
      * @param originIban customer's iban
      * @param startDate start date
      * @param endDate end date
-     * @return customer's transactions between two dates
+     * @return customer's transactions between two initialDate
      */
     List<Transaction> getTransactionsByOriginIbanBetweenDates(String originIban, Date startDate, Date endDate);
 
     /**
-     * Get average amount in an establishment
-     * @param establishmentIban establishment iban
-     * @return average amount
-     */
-    Number getAverageAmountPerTransactionInEstablishment(String establishmentIban);
-
-    /**
      * Get recommend establishments
-     * @param remainBudget remain budget
-     * @param endDate last travel day
-     * @param city travel city
      * @return recommend establishment list
      */
-    List<Establishment> getRecommendEstablishments(Number remainBudget, Date endDate, String city);
+    List<FoursquareVenue> getCurrentRecommendVenue();
 
 }

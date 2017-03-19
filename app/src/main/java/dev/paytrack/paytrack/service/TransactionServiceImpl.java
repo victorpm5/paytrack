@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dev.paytrack.paytrack.domain.Establishment;
 import dev.paytrack.paytrack.domain.Transaction;
+import dev.paytrack.paytrack.foursquare.FoursquareAPI;
+import dev.paytrack.paytrack.foursquare.FoursquareVenue;
 import dev.paytrack.paytrack.utils.DateUtils;
 
 /**
@@ -42,23 +43,9 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Number getAverageAmountPerTransactionInEstablishment(String establishmentIban) {
-
-        Double sum = 0.0;
-
-        // TODO Call Api using establishmentIban as counterPartyIban
-
-        List<Transaction> resultApi = new ArrayList<>();
-        for (Transaction transaction : resultApi) {
-            sum += transaction.getAmount();
-        }
-
-        Double transactionsCount = (double) resultApi.size();
-        return sum/transactionsCount;
+    public List<FoursquareVenue> getCurrentRecommendVenue() {
+        FoursquareAPI foursquareAPI = ServiceFactory.getFoursquareAPI();
+        return foursquareAPI.getCurrentVenues();
     }
 
-    @Override
-    public List<Establishment> getRecommendEstablishments(Number remainBudget, Date endDate, String city) {
-        return null;
-    }
 }
