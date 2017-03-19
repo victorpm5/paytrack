@@ -9,12 +9,12 @@ import dev.paytrack.paytrack.foursquare.FoursquareAPIImpl;
  */
 public class ServiceFactory {
 
-    private static TransactionServiceImpl transactionService;
+    private static TransactionServiceMock transactionService;
     private static FoursquareAPIImpl foursquareAPI;
 
-    public static TransactionServiceImpl getTransactionService(){
+    public static TransactionServiceMock getTransactionService(){
         if (transactionService == null)
-            transactionService = new TransactionServiceImpl();
+            transactionService = new TransactionServiceMock();
         return transactionService;
     }
 

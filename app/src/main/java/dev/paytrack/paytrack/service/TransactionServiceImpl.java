@@ -43,22 +43,6 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Number getAverageAmountPerTransactionInEstablishment(String establishmentIban) {
-
-        Double sum = 0.0;
-
-        // TODO Call Api using establishmentIban as counterPartyIban
-
-        List<Transaction> resultApi = new ArrayList<>();
-        for (Transaction transaction : resultApi) {
-            sum += transaction.getAmount();
-        }
-
-        Double transactionsCount = (double) resultApi.size();
-        return sum/transactionsCount;
-    }
-
-    @Override
     public List<FoursquareVenue> getCurrentRecommendVenue() {
         FoursquareAPI foursquareAPI = ServiceFactory.getFoursquareAPI();
         return foursquareAPI.getCurrentVenues();

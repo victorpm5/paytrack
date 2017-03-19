@@ -29,13 +29,6 @@ public interface TransactionService {
     List<Transaction> getTransactionsByOriginIbanBetweenDates(String originIban, Date startDate, Date endDate);
 
     /**
-     * Get average amount in an establishment
-     * @param establishmentIban establishment iban
-     * @return average amount
-     */
-    Number getAverageAmountPerTransactionInEstablishment(String establishmentIban);
-
-    /**
      * Get recommend establishments
      * @return recommend establishment list
      */
