@@ -1,6 +1,5 @@
 package dev.paytrack.paytrack.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,15 +18,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dev.paytrack.paytrack.adapter.TransactionAdapter;
-import dev.paytrack.paytrack.domain.Transaction;
-import dev.paytrack.paytrack.foursquare.FoursquareAPI;
 import dev.paytrack.paytrack.R;
+import dev.paytrack.paytrack.adapter.VenuesAdapter;
+import dev.paytrack.paytrack.domain.Transaction;
+import dev.paytrack.paytrack.foursquare.FoursquareVenue;
 import dev.paytrack.paytrack.service.ServiceFactory;
 import dev.paytrack.paytrack.service.TransactionService;
 import dev.paytrack.paytrack.utils.Utils;
 
-public class TripActivity extends AppCompatActivity {
+public class RecommendVenuesActivity extends AppCompatActivity {
 
     public static final String INTENT_CITY = "INTENT_CITY";
     private GoogleMap mMap;
@@ -36,20 +35,15 @@ public class TripActivity extends AppCompatActivity {
     private String location;
 
     private TransactionService transactionService;
-    private FoursquareAPI foursquareAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip);
-
-        transactionService = ServiceFactory.getTransactionService();
-        foursquareAPI = ServiceFactory.getFoursquareAPI();
+        setContentView(R.layout.activity_recommend_venues);
 
         location = getIntent().getExtras().getString(INTENT_CITY);
-        LatLng coordinates = getLocationFromAddress(location);
-        foursquareAPI.generateVenuesFromCity(   coordinates.latitude,
-                                                coordinates.longitude);
+
+        transactionService = ServiceFactory.getTransactionService();
 
         mMapView = (MapView) findViewById(R.id.mapView);
 
@@ -58,13 +52,14 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        ArrayList<Transaction> transactions = new ArrayList<>();
+        ArrayList<FoursquareVenue> venues = (ArrayList<FoursquareVenue>)
+                transactionService.getCurrentRecommendVenue();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         assert recyclerView != null;
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TransactionAdapter(transactions));
+        recyclerView.setAdapter(new VenuesAdapter(venues));
     }
 
     private void initializeMap(Bundle savedInstanceState) {
@@ -83,22 +78,20 @@ public class TripActivity extends AppCompatActivity {
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000, null);
                 }
                 mMapView.onResume();
-                locateTransactions();
+                locateVenues();
             }
         });
     }
 
-    private void locateTransactions() {
-        List<Transaction> transactions = transactionService.
-                getTransactionsByOriginIbanBetweenDates("iban", new Date(), new Date());
-        for (Transaction t : transactions) {
-            LatLng position = getLocationFromAddress(t.getCounterPartyName());
-            if (position != null) {
-                MarkerOptions marker = new MarkerOptions()
+    private void locateVenues() {
+        List<FoursquareVenue> venues = transactionService.
+                getCurrentRecommendVenue();
+        for (FoursquareVenue fv : venues) {
+            LatLng position = new LatLng(fv.getLatitude(), fv.getLongitute());
+            MarkerOptions marker = new MarkerOptions()
                         .position(position)
-                        .title(String.valueOf(t.getAmount()));
-                mMap.addMarker(marker);
-            }
+                        .title(String.valueOf(fv.getName()));
+            mMap.addMarker(marker);
         }
     }
 
@@ -106,9 +99,7 @@ public class TripActivity extends AppCompatActivity {
         return Utils.getLocationFromAddress(strAddress, getApplicationContext());
     }
 
-    public void showRecommendPlaces(View view) {
-        Intent intent = new Intent(this, RecommendVenuesActivity.class);
-        intent.putExtra(RecommendVenuesActivity.INTENT_CITY, location);
-        startActivity(intent);
+    public void back(View view) {
+        onBackPressed();
     }
 }
