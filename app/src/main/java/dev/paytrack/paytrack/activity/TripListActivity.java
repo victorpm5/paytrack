@@ -19,6 +19,8 @@ public class TripListActivity extends BaseActivity implements RecyclerViewItemSe
 
     private RecyclerView recyclerView;
 
+    private RealmResults<Trip> trips;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class TripListActivity extends BaseActivity implements RecyclerViewItemSe
 
         Realm.init(this);
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<Trip> trips = realm.where(Trip.class).findAll();
+        trips = realm.where(Trip.class).findAll();
         trips.sort("initialDate");
 
         recyclerView.setAdapter(new TripItemAdapter(trips, this, FileManager.getInstance(this)));
@@ -57,7 +59,10 @@ public class TripListActivity extends BaseActivity implements RecyclerViewItemSe
 
     @Override
     public void onItemSelected(int position) {
+        Trip selectedTrip = trips.get(position);
+
         Intent intent = new Intent(this, TripActivity.class);
+        intent.putExtra(TripActivity.INTENT_CITY, selectedTrip.getDestination());
         startActivity(intent);
     }
 }

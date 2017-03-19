@@ -20,8 +20,6 @@ import java.util.List;
 import dev.paytrack.paytrack.adapter.TransactionAdapter;
 import dev.paytrack.paytrack.domain.Transaction;
 import dev.paytrack.paytrack.foursquare.FoursquareAPI;
-import dev.paytrack.paytrack.foursquare.FoursquareVenue;
-import dev.paytrack.paytrack.model.PaymentItem;
 import dev.paytrack.paytrack.R;
 import dev.paytrack.paytrack.service.ServiceFactory;
 import dev.paytrack.paytrack.service.TransactionService;
@@ -29,6 +27,7 @@ import dev.paytrack.paytrack.utils.Utils;
 
 public class TripActivity extends AppCompatActivity {
 
+    public static final String INTENT_CITY = "INTENT_CITY";
     private GoogleMap mMap;
     private MapView mMapView;
 
@@ -43,7 +42,10 @@ public class TripActivity extends AppCompatActivity {
         transactionService = ServiceFactory.getTransactionService();
         foursquareAPI = ServiceFactory.getFoursquareAPI();
 
-        List<FoursquareVenue> list = foursquareAPI.getVenuesFromCity(40.7463956, -73.9852992);
+        String location = getIntent().getExtras().getString(INTENT_CITY);
+        LatLng coordinates = getLocationFromAddress(location);
+        foursquareAPI.generateVenuesFromCity(   coordinates.latitude,
+                                                coordinates.longitude);
 
         mMapView = (MapView) findViewById(R.id.mapView);
 

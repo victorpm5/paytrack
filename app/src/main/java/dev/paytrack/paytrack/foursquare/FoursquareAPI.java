@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface FoursquareAPI {
 
-    List<FoursquareVenue> getVenuesFromCity(double latitude, double longitude);
+    List<FoursquareVenue> generateVenuesFromCity(double latitude, double longitude);
+
+    List<FoursquareVenue> getCurrentVenues();
 
 }

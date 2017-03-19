@@ -31,10 +31,15 @@ public class FoursquareAPIImpl implements FoursquareAPI {
     private List<FoursquareVenue> venueList = new ArrayList<>();
 
     @Override
-    public List<FoursquareVenue> getVenuesFromCity(double latitude, double longitude) {
+    public List<FoursquareVenue> generateVenuesFromCity(double latitude, double longitude) {
         this.latitude = String.valueOf(latitude);
         this.longitude = String.valueOf(longitude);
         new FoursquareCall().execute();
+        return venueList;
+    }
+
+    @Override
+    public List<FoursquareVenue> getCurrentVenues() {
         return venueList;
     }
 

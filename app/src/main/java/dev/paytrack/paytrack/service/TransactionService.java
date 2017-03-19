@@ -3,8 +3,8 @@ package dev.paytrack.paytrack.service;
 import java.util.Date;
 import java.util.List;
 
-import dev.paytrack.paytrack.domain.Establishment;
 import dev.paytrack.paytrack.domain.Transaction;
+import dev.paytrack.paytrack.foursquare.FoursquareVenue;
 
 /**
  * Created by albert on 18/03/17.
@@ -37,11 +37,8 @@ public interface TransactionService {
 
     /**
      * Get recommend establishments
-     * @param remainBudget remain budget
-     * @param endDate last travel day
-     * @param city travel city
      * @return recommend establishment list
      */
-    List<Establishment> getRecommendEstablishments(Number remainBudget, Date endDate, String city);
+    List<FoursquareVenue> getCurrentRecommendVenue();
 
 }
