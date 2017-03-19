@@ -40,6 +40,8 @@ public class AuthenticationActivity extends AppCompatActivity {
             }.execute(code);
 
         }
+
+        startActivity(new Intent(getApplicationContext(), TripListActivity.class));
     }
 
 }
