@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -100,5 +101,9 @@ public class TripActivity extends AppCompatActivity {
 
     public LatLng getLocationFromAddress(String strAddress) {
         return Utils.getLocationFromAddress(strAddress, getApplicationContext());
+    }
+
+    public void showRecommendPlaces(View view) {
+
     }
 }

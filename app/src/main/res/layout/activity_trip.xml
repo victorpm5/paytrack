@@ -61,4 +61,14 @@
 
     </ScrollView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_trip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/places_ic_search"
+        android:onClick="showRecommendPlaces"/>
+
 </LinearLayout>
