@@ -34,4 +34,51 @@ public class Transaction {
     // Booking date. In the format YYYY-MM-DD
     private String bookingDate;
 
+    public String getOriginIban() {
+        return originIban;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public String getCounterPartyName() {
+        return counterPartyName;
+    }
+
+    public String getCounterPartyIban() {
+        return counterPartyIban;
+    }
+
+    public String getUsage() {
+        return usage;
+    }
+
+    public String getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setOriginIban(String originIban) {
+        this.originIban = originIban;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setCounterPartyName(String counterPartyName) {
+        this.counterPartyName = counterPartyName;
+    }
+
+    public void setCounterPartyIban(String counterPartyIban) {
+        this.counterPartyIban = counterPartyIban;
+    }
+
+    public void setUsage(String usage) {
+        this.usage = usage;
+    }
+
+    public void setBookingDate(String bookingDate) {
+        this.bookingDate = bookingDate;
+    }
 }
