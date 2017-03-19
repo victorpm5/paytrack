@@ -9,43 +9,43 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dev.paytrack.paytrack.R;
-import dev.paytrack.paytrack.model.PaymentItem;
+import dev.paytrack.paytrack.domain.Transaction;
 
-public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentHolder> {
+public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionHolder> {
 
-    private ArrayList<PaymentItem> paymentItems;
+    private ArrayList<Transaction> transactions;
 
-    public PaymentAdapter(ArrayList<PaymentItem> paymentItems) {
-        this.paymentItems = paymentItems;
+    public TransactionAdapter(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
         notifyDataSetChanged();
     }
 
     @Override
-    public PaymentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TransactionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.payment_row, parent, false);
-        return new PaymentHolder(view);
+        return new TransactionHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PaymentHolder holder, int position) {
-        PaymentItem current = paymentItems.get(position);
-        holder.name.setText(current.getName());
-        holder.price.setText(String.valueOf(current.getPrice()) + " €");
+    public void onBindViewHolder(TransactionHolder holder, int position) {
+        Transaction current = transactions.get(position);
+        holder.name.setText(current.getCounterPartyName());
+        holder.price.setText(String.valueOf(current.getAmount()) + " €");
     }
 
     @Override
     public int getItemCount() {
-        return paymentItems.size();
+        return transactions.size();
     }
 
-    class PaymentHolder extends RecyclerView.ViewHolder {
+    class TransactionHolder extends RecyclerView.ViewHolder {
 
         public View view;
         TextView name;
         TextView price;
 
-        PaymentHolder(View itemView) {
+        TransactionHolder(View itemView) {
             super(itemView);
             this.view = itemView;
             this.name = (TextView) itemView.findViewById(R.id.name);

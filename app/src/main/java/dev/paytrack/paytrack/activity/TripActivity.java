@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dev.paytrack.paytrack.adapter.PaymentAdapter;
+import dev.paytrack.paytrack.adapter.TransactionAdapter;
 import dev.paytrack.paytrack.domain.Transaction;
 import dev.paytrack.paytrack.foursquare.FoursquareAPI;
 import dev.paytrack.paytrack.foursquare.FoursquareVenue;
@@ -52,31 +52,13 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        ArrayList<PaymentItem> paymentItems = new ArrayList<>();
-        paymentItems.add(
-                new PaymentItem(
-                        "Starbucks Pl. Universitat",
-                        4.70
-                )
-        );
-        paymentItems.add(
-                new PaymentItem(
-                        "Restaurante el Puma",
-                        12.30
-                )
-        );
-        paymentItems.add(
-                new PaymentItem(
-                        "Tiger",
-                        1.00
-                )
-        );
+        ArrayList<Transaction> transactions = new ArrayList<>();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         assert recyclerView != null;
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new PaymentAdapter(paymentItems));
+        recyclerView.setAdapter(new TransactionAdapter(transactions));
     }
 
     private void initializeMap(Bundle savedInstanceState) {
