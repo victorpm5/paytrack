@@ -63,6 +63,9 @@ public class TripListActivity extends BaseActivity implements RecyclerViewItemSe
 
         Intent intent = new Intent(this, TripActivity.class);
         intent.putExtra(TripActivity.INTENT_CITY, selectedTrip.getDestination());
+        intent.putExtra(TripActivity.START_DATE, selectedTrip.getInitialDate());
+        intent.putExtra(TripActivity.END_DATE, selectedTrip.getFinalDate());
+        intent.putExtra(TripActivity.BUDGET, selectedTrip.getPrice());
         startActivity(intent);
     }
 }

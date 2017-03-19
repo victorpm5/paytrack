@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,16 +34,20 @@ public class TripActivity extends AppCompatActivity {
     public static final String INTENT_CITY = "INTENT_CITY";
     public static final String START_DATE = "START_DATE";
     public static final String END_DATE = "END_DATE";
+    public static final String BUDGET = "BUDGET";
 
     private GoogleMap mMap;
     private MapView mMapView;
 
     private String location;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
+
+    private String budget;
 
     private TransactionService transactionService;
     private FoursquareAPI foursquareAPI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +58,10 @@ public class TripActivity extends AppCompatActivity {
         foursquareAPI = ServiceFactory.getFoursquareAPI();
 
         location = getIntent().getExtras().getString(INTENT_CITY);
-        startDate = getIntent().getExtras().getString(START_DATE);
-        endDate = getIntent().getExtras().getString(END_DATE);
+        startDate = (Date) getIntent().getExtras().getSerializable(START_DATE);
+        endDate = (Date) getIntent().getExtras().getSerializable(END_DATE);
+        budget =  getIntent().getExtras().getString(BUDGET);
+
 
         LatLng coordinates = getLocationFromAddress(location);
         foursquareAPI.generateVenuesFromCity(   coordinates.latitude,
@@ -62,15 +69,16 @@ public class TripActivity extends AppCompatActivity {
 
         mMapView = (MapView) findViewById(R.id.mapView);
 
+        TextView budgetText = (TextView) findViewById(R.id.money);
+        budgetText.setText(budget + "€");
+
         initializeData();
         initializeMap(savedInstanceState);
     }
 
     private void initializeData() {
         ArrayList<Transaction> transactions = (ArrayList<Transaction>) transactionService.
-                getTransactionsByOriginIbanBetweenDates(null,
-                                                        DateUtils.parseStringToDate(startDate),
-                                                        DateUtils.parseStringToDate(endDate));
+                getTransactionsByOriginIbanBetweenDates(null, startDate, endDate);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -102,9 +110,8 @@ public class TripActivity extends AppCompatActivity {
 
     private void locateTransactions() {
         ArrayList<Transaction> transactions = (ArrayList<Transaction>) transactionService.
-                getTransactionsByOriginIbanBetweenDates(null,
-                        DateUtils.parseStringToDate(startDate),
-                        DateUtils.parseStringToDate(endDate));
+                getTransactionsByOriginIbanBetweenDates(null, startDate, endDate);
+
         for (Transaction t : transactions) {
             LatLng position = getLocationFromAddress(t.getCounterPartyName());
             if (position != null) {
